@@ -1,0 +1,22 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const productRoutes = require("./routes/productRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+require("dotenv").config();
+
+const app = express();
+
+// MongoDB online 
+mongoose.connect(process.env.MONGO_URL);
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
+
+app.use("/", productRoutes);
+app.use("/admin", adminRoutes);
+
+app.listen(3000, () =>
+    console.log("Website Viet Phat chạy tại: http://localhost:3000")
+);
